@@ -1,0 +1,6 @@
+<%nt_id=request.querystring("id")
+nt_ders=request.querystring("drs")
+Set del_student = conn.Execute("DELETE * FROM "&nt_ders&" WHERE id = "&nt_id&"")
+response.write("<center>Silme iþlemi baþarýyla tamamlanmýþtýr !")
+response.write ("<br><a href='admin.asp?action=nt_lst'>« &nbsp;&nbsp; Listele </a></center>")
+%>

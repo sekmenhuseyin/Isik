@@ -1,0 +1,56 @@
+<? if ($kaydet=="") {?>
+  <form method="POST" action="?action=kmlk_yn">
+	<table border="0" width="95%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td align="right">Numara : &nbsp;</td>
+			<td> <input type="text" name="numara" size="15" maxlength="10"></td>
+		</tr>
+		<tr>
+			<td align="right">Ad : &nbsp;</td>
+			<td> <input type="text" name="ad" size="25" maxlength="20"></td>
+		</tr>
+		<tr>
+			<td align="right">Soyad : &nbsp;</td>
+			<td> <input type="text" name="soyad" size="25" maxlength="20"></td>
+		</tr>
+		<tr>
+			<td align="right">TC Kimlik No : &nbsp;</td>
+			<td> <input type="text" name="tcno" size="15" maxlength="11"></td>
+		</tr>
+		<tr>
+			<td align="right">Telefon : &nbsp;</td>
+			<td> <input type="text" name="tel" size="20" maxlength="15"></td>
+		</tr>
+		<tr>
+			<td align="right">Doðum Tarihi : &nbsp;</td>
+			<td> <input type="text" name="dogtar" size="20" maxlength="10"></td>
+		</tr>
+		<tr>
+			<td align="right">E-Posta : &nbsp;</td>
+			<td> <input type="text" name="email" size="35" maxlength="30"></td>
+		</tr>
+		<tr>
+			<td align="right">Adres : &nbsp;</td>
+			<td> <input type="text" name="adres" size="55" maxlength="50"></td>
+		</tr>
+		<tr>
+			<td align="center">&nbsp;</td>
+				<? if ($ht=="noogr"){echo("Lütfen öðrencinin adýný, soyadýný ve numarasýný eksiksiz yazýnýz !");} ?>
+			<td >&nbsp;</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><input type="submit" value="  KAYDET  " name="kaydet"></td>
+		</tr>
+	</table>
+  </form>
+<? }else{
+  	if (($numara=="") or ($ad=="") or ($soyad=="")){
+		echo "<script language=\"JavaScript\">window.location.href = '?action=kmlk_yn&id=$id&ht=noogr';</script>";
+  	}else{
+		@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+		@mysql_select_db ($db_name)||("Veritaban&#305; seçilemedi !");
+		$ekle = mysql_query("INSERT INTO kimlik(numara, ad, soyad, tcno, tel, dogtar, email, adres) VALUES ('$numara', '$ad', '$soyad', '$tcno', '$tel', '$dogtar', '$email' , '$adres' )", $db_name );
+		echo ("<center><br><br>Kayýt iþleminiz baþarýyla gerçekleþtirilmiþtir !");
+		echo ("<br><a href='admin.asp?action=kmlk_lst'>« &nbsp;&nbsp; Listele </a></center>");
+  	}
+} ?>

@@ -1,0 +1,53 @@
+	<a href="?action=dyr_yn">Yeni Duyuru Ekle</a>
+	<? 
+	@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+	@mysql_select_db ("db_okul")||("Veritabani seçilemedi !");
+	$tablo="SELECT * FROM duyuru ORDER by tarih";
+	$sorgu=mysql_query($tablo);
+	?>
+	<p>&nbsp;</p>
+	<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tr> 
+        <td width="20%" height="15" align="center">
+		  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">TAR&#304;H</font></strong>
+		</td>
+        <td width="20%" height="15" align="left">
+		  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">BA&#350;LIK</font></strong>
+		</td>
+        <td width="40%" height="15" align="left">
+		  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">MESAJ</font></strong>
+		</td>
+        <td width="10%" height="15" align="center">
+		  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#990000">DÜZENLE</font></strong>
+		</td>
+        <td width="10%" align="center">
+		  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#990000">S&#304;L</font></strong>
+		</td>
+      </tr>
+	  <tr>
+		<td colspan="5" align="center">
+			<hr>
+		</td>	  
+	  </tr>
+	<?   
+	while($oku=mysql_fetch_assoc($sorgu)){echo "
+      <tr> 
+        <td height='20%' align='center'>
+		  <font face='Verdana, Arial, Helvetica, sans-serif' size='2'>$oku[tarih]</font>
+		</td>
+        <td height=20% align=left>
+		  <font face='Verdana, Arial, Helvetica, sans-serif' size='2'>$oku[title]</font>
+		</td>
+        <td width='40%' align='left'>
+		  <a title=$oku[title] href='?action=dyr_lst&id=$oku[id]'>$oku[msg]</a>
+		</td>
+        <td width='10%' align='center'>
+          <a href='?action=dyr_dzn&id=$oku[id]'><img src='images/dzn.gif' border='0' alt='Düzenle'></a>
+		</td>
+        <td width='10%' align='center'>
+		  <a href='?action=dyr_sl&id=$oku[id]' OnClick='return confirm('------- &nbsp;&nbsp;U y a r ý&nbsp;&nbsp; -------------------------------------------------------------------------- \n\n\$oku[title]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;baþlýklý duyuruyu silmek istediðinizden emin misiniz?')'><img src='images/sl.gif' alt='Sil'  border='0'></a>
+		</td>
+      </tr>
+	";}
+	?>	
+	</table>

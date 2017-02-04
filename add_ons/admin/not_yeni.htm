@@ -1,0 +1,122 @@
+<%submit=request.form("submit")
+if submit="" then%>
+	<form action="?action=nt_yn" method="post">
+	<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+		    <td align="right">
+		  		<strong><font size="2">Öðrencinin Numarasý : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="numara"></td>
+		<tr>
+		<tr>
+		    <td align="right">
+		  		<strong><font size="2">Ders : &nbsp;</font></strong>
+			</td>
+			<td>
+				<select name="ders">
+	<%sql = "SELECT * from dersler order by name asc"
+	rst.open sql,conn,3,3
+	while not rst.eof
+		response.write("<option value="&rst("lakap")&">"&rst("name")&"</option>")
+		rst.movenext
+	wend
+	rst.close%>
+				</select>
+			</td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 1 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz1"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 2 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz2"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 3 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz3"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 4 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz4"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 5 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz5"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Yazýlý 6 : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="yaz6"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Kanaat : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="kanaat"></td>
+		<tr>
+		</tr>
+		    <td align="right">
+			  	<strong><font size="2">Ortalama : &nbsp;</font></strong>
+			</td>
+			<td><input type="text" name="ortalama"></td>
+		</tr>
+		</tr>
+			<td colspan="2" align="center" height="35" valign="bottom">
+				<input type="submit" name="submit" value=" Kaydet ">
+			</td>
+		</tr>
+	</table>
+	</form>
+<%else%>
+	<%sql = "SELECT * from kimlik where numara='"&numara&"'"
+	rst.open sql,conn,3,3
+	if rst.eof then
+		response.write("Bu numaraya sahip bir öðrenci kayýtlý deðildir !")
+		response.write("<p><br><script language=javascript src=index_files/geri.js></script>")
+		response.write("<noscript><a href=javascript:history.go(-1) title=Geri><img src=index_files/geri.gif border=0 /></a></noscript></p>")
+		rst.close
+	else
+		ders = Request.Form("ders")
+		yaz1 = Request.Form("yaz1")
+		yaz2 = Request.Form("yaz2")
+		yaz3 = Request.Form("yaz3")
+		yaz4 = Request.Form("yaz4")
+		yaz5 = Request.Form("yaz5")
+		yaz6 = Request.Form("yaz6")
+		kanaat = Request.Form("kanaat")
+		ortalama = Request.Form("ortalama")
+		rst.close
+  		if numara="" then
+			response.write ("<center><br><br>Lütfen bilgileri eksiksiz yazýnýz !")
+			response.write ("<br><a href='javascript:history.back()'>« &nbsp;&nbsp; Geri </a></center>")
+  		else
+			rSQL = "Select * FROM "&ders&""
+			rst.open rSQL,conn,3,3
+			rst.AddNew
+			  rst("numara") = numara
+			  rst("yaz1") = yaz1
+			  rst("yaz2") = yaz2
+			  rst("yaz3") = yaz3
+			  rst("yaz4") = yaz4
+			  rst("yaz5") = yaz5
+			  rst("yaz6") = yaz6
+			  rst("kanaat") = kanaat
+			  rst("ortalama") = ortalama
+			rst.Update
+			response.write ("<center><br><br>Kayýt iþleminiz baþarýyla gerçekleþtirilmiþtir !")
+			response.write ("<br><a href='admin.asp?action=nt_lst'>« &nbsp;&nbsp; Listele </a></center>")
+		end if
+	end if%>
+<%end if%>

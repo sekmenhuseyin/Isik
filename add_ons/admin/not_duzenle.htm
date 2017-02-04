@@ -1,0 +1,72 @@
+<%if request.form("kaydet")="" then
+	sql = "SELECT * from notlar where id=" & request.querystring("id")
+	rst.open sql,conn,3,3%>
+  <form method="POST" action="?action=dzn">
+	<table border="0" width="95%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td align="right">Numara : &nbsp;</td>
+			<td> <input type="text" name="numara" size="15" maxlength="10" value=<%=rst("numara")%>></td>
+		</tr>
+		<tr>
+			<td align="right">Ad : &nbsp;</td>
+			<td> <input type="text" name="ad" size="25" maxlength="20" value=<%=rst("ad")%>></td>
+		</tr>
+		<tr>
+			<td align="right">Soyad : &nbsp;</td>
+			<td> <input type="text" name="soyad" size="25" maxlength="20"value=<%=rst("soyad")%>></td>
+		</tr>
+		<tr>
+			<td align="right">TC Kimlik No : &nbsp;</td>
+			<td> <input type="text" name="tcno" size="15" maxlength="11"value=<%=rst("tcno")%>></td>
+		</tr>
+		<tr>
+			<td align="right">Telefon : &nbsp;</td>
+			<td> <input type="text" name="tel" size="20" maxlength="15"value=<%=rst("tel")%>></td>
+		</tr>
+		<tr>
+			<td align="right">E-Posta : &nbsp;</td>
+			<td> <input type="text" name="email" size="35" maxlength="30"value=<%=rst("email")%>></td>
+		</tr>
+		<tr>
+			<td align="right">Adres : &nbsp;</td>
+			<td> <input type="text" name="adres" size="55" maxlength="50"value=<%=rst("adres")%>></td>
+		</tr>
+		<tr>
+			<td align="right">&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><input type="submit" value="  DEÐÝÞÝKLÝKLERÝ KAYDET  " name="kaydet"></td>
+		</tr>
+	</table>
+  </form>
+<%else
+  	numara = Request.Form("numara")
+  	ad = Request.Form("ad")
+  	soyad = Request.Form("soyad")
+  	tcno = Request.Form("tcno")
+  	tel = Request.Form("tel")
+  	email = Request.Form("email")
+  	adres = Request.Form("adres")
+	
+  	if numara="" or ad="" or soyad="" then
+		response.write ("<center>Lütfen bilgileri eksiksiz yazýnýz !")
+		response.write("<p><br><script language=javascript src=index_files/geri.js></script>")
+		response.write("<noscript><a href=javascript:history.go(-1) title=Geri><img src=index_files/geri.gif border=0 /></a></noscript></p>")
+  	else
+		Set rec = Server.CreateObjecT("ADODB.RecordSet")
+		rSQL = "Select * FROM kimlik"
+		rec.open rSQL,conn,3,3
+	
+		rec("numara") = numara
+		rec("ad") = ad
+		rec("soyad") = soyad
+		rec("tcno") = tcno
+		rec("tel") = tel
+		rec("email") = email
+		rec("adres") = adres
+		rec.Update
+		response.write ("<center><br><br>Deðiþiklik iþleminiz baþarýyla gerçekleþtirilmiþtir !")
+		response.write ("<br><a href='admin.asp?action=kmlk_lst'>« &nbsp;&nbsp; Listele </a></center>")
+  	end if
+end if%>

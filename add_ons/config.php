@@ -1,0 +1,1 @@
+<? $password_admin=admin; $db_name=db_okul; ?>

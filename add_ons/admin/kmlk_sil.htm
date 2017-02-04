@@ -1,0 +1,5 @@
+<%d_id=request.querystring("id")
+Set del_student = conn.Execute("DELETE * FROM kimlik WHERE id = "&d_id&"")
+response.write("<center>Silme iþlemi baþarýyla tamamlanmýþtýr !")
+response.write ("<br><a href='admin.asp?action=kmlk_lst'>« &nbsp;&nbsp; Listele </a></center>")
+%>

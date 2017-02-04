@@ -1,0 +1,47 @@
+<? if($submit==""){ ?>
+  <form action="?action=pass_ch" method="post">
+    <table width="70%" border="0" align="center">
+      <tr>
+        <td align="right">Þu anki Þifreniz :&nbsp;&nbsp;</td>
+        <td><input name="old_pass" type="password" size="20" maxlength="25" /></td>
+      </tr>
+      <tr>
+        <td align="right">Yeni Þifreniz :&nbsp;&nbsp;</td>
+        <td><input name="new1_pass" type="password" size="20" maxlength="25" /></td>
+      </tr>
+      <tr>
+        <td align="right">Yeni Þifreniz (Tekrar) :&nbsp;&nbsp;</td>
+        <td><input name="new2_pass" type="password" size="20" maxlength="25" /></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><input name="submit" type="submit" value="&nbsp;&nbsp; Þifreyi Deðiþtir &nbsp;&nbsp;" /></td>
+      </tr>
+    </table>
+</form>
+<? }else{
+	if ($password_admin=$old_pass){
+		if ($new1_pass=$new2_pass){
+			$dosya=fopen("add_ons/config.php", w);
+			fwrite($dosya,"<? $");
+			fwrite($dosya,"password_admin=$new1_pass; $");
+			fwrite($dosya,"db_name=$db_name");
+			fwrite($dosya,"; ?>");
+			fclose($dosya);
+			$_SESSION["admin_pass"] ="";
+			echo("Þifreniz baþarýyla deðiþtirilmiþtir.");		
+		}else{
+			echo("Yeni þifreniz birbirleriye eþleþmiyor. Lütfen yeni þifrenizi ayný giriniz !");
+			echo("<p align=center><br><script src='index_files/goback.js'></script>");
+			echo("<noscript><a href='javascript:history.go(-1)' title'Geri'>");
+			echo("<img src='index_files/goback_b1.gif' border='0' /></a></noscript></p>");
+		};
+	}else{
+		echo("Girdiðiniz þifre yanlýþ. Lütfen þu anki þifrenizi doðru yazýnýz !");
+		echo("<p align=center><br><script src='index_files/goback.js'></script>");
+		echo("<noscript><a href='javascript:history.go(-1)' title'Geri'>");
+		echo("<img src='index_files/goback_b1.gif' border='0' /></a></noscript></p>");
+	};
+} ?>

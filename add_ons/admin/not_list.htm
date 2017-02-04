@@ -1,0 +1,74 @@
+<?
+if ($id==""){
+?>
+	<a href="?action=nt_yn">Yeni Not Giri&#351;i</a>
+	<? 
+	@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+	@mysql_select_db ("db_okul")||("Veritaban&#305; seçilemedi !");
+	$tablo="SELECT * FROM kimlik ORDER by numara";
+	$sorgu=mysql_query($tablo);
+	?>
+		<p>&nbsp;</p>
+		<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0">
+	      <tr> 
+	        <td width="20%" height="15" align="center">
+			  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">NUMARA</font></strong>
+			</td>
+	        <td width="50%" height="15" align="left">
+			  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">AD SOYAD</font></strong>
+			</td>
+	        <td width="30%" height="15" align="center">
+			  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">DÜZENLE</font></strong>
+			</td>
+	      </tr>
+		  <tr>
+			<td colspan="5" align="center">
+				<hr>
+			</td>	  
+		  </tr>
+	<?   
+	while($oku=mysql_fetch_assoc($sorgu)){echo "
+	      <tr> 
+	        <td height='20%' align='center'>
+			  <font face='Verdana, Arial, Helvetica, sans-serif' size='2'>$oku[numara]</font>
+			</td>
+	        <td height='50%' align='left'>
+			  <a title='$oku[ad]&nbsp;$oku[soyad]' href='?action=nt_lst&id=$oku[numara]'>$oku[ad]&nbsp;$oku[soyad]</a>
+			</td>
+	        <td width='30%' align='center'>
+	          <a href='?action=nt_dzn&id=$oku[numara]'><img src='images/dzn.gif' border='0' alt='Düzenle'></a>
+			</td>
+	      </tr>
+	";}
+	?>	
+		</table>
+<? }else{ ?>
+	<table width="95%" border="1" align="center" cellpadding="2" cellspacing="0">
+		<tr>
+		    <td width="40%" height="15" align="center">
+			  	<strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">AD SOYAD</font></strong>
+			</td>
+		    <td width="30%" height="15" align="center">
+		  		<strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">DERS ADI</font></strong>
+			</td>
+		    <td width="10%" height="15" align="center">
+			  	<strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#000000">ORTALAMASI</font></strong>
+			</td>
+	        <td width="10%" height="15" align="center">
+			  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#990000">DÜZENLE</font></strong>
+			</td>
+	        <td width="10%" align="center">
+			  <strong><font face="Verdana, Arial, Helvetica, sans-serif" size="2" color="#990000">S&#304;L</font></strong>
+			</td>
+		</tr>
+	<?
+	@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+	@mysql_select_db ("db_okul")||("Veritaban&#305; seçilemedi !");
+	$tablo="SELECT * FROM kimlik where numara=$id";
+	$sorgu=mysql_query($tablo);	$oku=mysql_fetch_assoc($sorgu);
+	$ogr_no=$oku[numara];	$ogr_name=$oku[ad];	$ogr_surname=$oku[soyad];
+	include("not_notlar.php");
+	?>
+	</table>
+<? include("goback.html");  
+} ?>

@@ -1,0 +1,69 @@
+<? if ($kaydet==""){
+	@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+	@mysql_select_db ("db_okul")||("Veritaban&#305; seçilemedi !");
+	$tablo="SELECT * FROM kimlik where id='$id'";
+	$sorgu=mysql_query($tablo);$oku=mysql_fetch_assoc($sorgu)
+?>
+  <form method="POST" action="?action=kmlk_dzn">
+	<table border="0" width="95%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td align="right">Numara : &nbsp;</td>
+			<td><input type="hidden" name="numara" size="15" maxlength="10" value=<? echo("$oku[numara]") ?>><b><? echo("$oku[numara]") ?></b></td>
+		</tr>
+		<tr>
+			<td align="right">Ad : &nbsp;</td>
+			<td> <input type="text" name="ad" size="25" maxlength="20" value=<? echo("$oku[ad]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">Soyad : &nbsp;</td>
+			<td> <input type="text" name="soyad" size="25" maxlength="20"value=<? echo("$oku[soyad]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">TC Kimlik No : &nbsp;</td>
+			<td> <input type="text" name="tcno" size="15" maxlength="11"value=<? echo("$oku[tcno]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">Telefon : &nbsp;</td>
+			<td> <input type="text" name="tel" size="20" maxlength="15"value=<? echo("$oku[tel]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">E-Posta : &nbsp;</td>
+			<td> <input type="text" name="email" size="35" maxlength="30"value=<? echo("$oku[email]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">Adres : &nbsp;</td>
+			<td> <input type="text" name="adres" size="55" maxlength="50"value=<? echo("$oku[adres]") ?>></td>
+		</tr>
+		<tr>
+			<td align="right">&nbsp;</td>
+			<td ><? if($ht<>""){echo("Lütfen Ögrencinin Numarasini, Adini ve Soyadini Giriniz !");} ?>&nbsp;</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2">
+				<input type="submit" value="  Degisiklikleri Kaydet  " name="kaydet">&nbsp;&nbsp;
+				<input type="reset" value="  Degisiklikleri Sifirla  " name="iptal">
+			</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2">
+				<? include("goback.html"); ?>
+			</td>
+		</tr>
+	</table>
+  </form>
+<? }else{
+  	if (($ad=="") or ($soyad=="")) {
+		echo "<script language=\"JavaScript\">window.location.href = '?action=kmlk_dzn&id=$id&ht=noogr';</script>";
+  	}else{
+		@mysql_connect ("localhost","root")||("Ba&#287;lant&#305; gerçekle&#351;medi !");
+		@mysql_select_db ("db_okul")||("Veritaban&#305; seçilemedi !");
+		$tablo="update kimlik set ad='$ad',soyad='$soyad',tcno='$tcno',tel='$tel',email='$email',adres='$adres' where numara='$oku[numara]'";
+		$sorgu=mysql_query($tablo);
+		if ($sorgu)  {
+			echo("<center><br><br>Deðiþiklik iþleminiz baþarýyla gerçekleþtirilmiþtir !");
+			echo("<br><a href='?action=kmlk_lst'>« &nbsp;&nbsp; Listele </a></center>");
+		}else {
+			echo("Kayýt gerçekleþtirilemedi !");
+		}
+  	}
+} ?>

@@ -1,0 +1,37 @@
+<%if request.form("kaydet")="" then%>
+  <form method="POST" action="?action=dyr_yn">
+	<table border="0" width="95%" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td align="right">Duyuru Baþlýðý : &nbsp;</td>
+			<td> <input type="text" name="title" size="30" maxlength="50"></td>
+		</tr>
+		<tr>
+			<td align="right">Duyurunuz : &nbsp;</td>
+			<td> <textarea name="msg" cols="33" rows="10"></textarea></td>
+		</tr>
+		<tr>
+			<td align="right">&nbsp;</td>
+			<td >&nbsp;</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><input type="submit" value="  KAYDET  " name="kaydet"></td>
+		</tr>
+	</table>
+  </form>
+<%else
+  	if Request.Form("title")="" or Request.Form("msg")="" then
+		response.write ("<center><br><br>Lütfen bilgileri eksiksiz yazýnýz !")
+		response.write("<p><br><script language=javascript src=index_files/geri.js></script>")
+		response.write("<noscript><a href=javascript:history.go(-1) title=Geri><img src=index_files/geri.gif border=0 /></a></noscript></p>")
+  	else
+		rSQL = "Select * FROM duyuru"
+		rst.open rSQL,conn,3,3
+		rst.AddNew
+		  rst("tarih") = date()
+		  rst("title") = Request.Form("title")
+		  rst("msg") = Request.Form("msg")
+		rst.Update
+		response.write ("<center><br><br>Duyuru ekleme iþleminiz baþarýyla gerçekleþtirilmiþtir !")
+		response.write ("<br><a href='admin.asp?action=dyr_lst'>« &nbsp;&nbsp; Listele </a></center>")
+  	end if
+end if%>
